@@ -127,6 +127,66 @@ const contactsData: ContactsData = [
           timeStamp: "13:15",
         },
       },
+      {
+        user2: {
+          message: "that burger was delicious!",
+          timeStamp: "13:12",
+        },
+        you: {
+          message: "Oh yes, no doubt.",
+          timeStamp: "13:13",
+        },
+      },
+      {
+        user2: {
+          message: "We are definetely going to that place again.",
+          timeStamp: "13:13",
+        },
+        you: {
+          message: "we are. My mouth waters whenever drive thorugh that area",
+          timeStamp: "13:14",
+        },
+      },
+      {
+        user2: {
+          message: "haha, I bet. Lets take Tony and Natasha too next time",
+          timeStamp: "13:14",
+        },
+        you: {
+          message: "Sure. they would love it",
+          timeStamp: "13:15",
+        },
+      },
+      {
+        user2: {
+          message: "that burger was delicious!",
+          timeStamp: "13:12",
+        },
+        you: {
+          message: "Oh yes, no doubt.",
+          timeStamp: "13:13",
+        },
+      },
+      {
+        user2: {
+          message: "We are definetely going to that place again.",
+          timeStamp: "13:13",
+        },
+        you: {
+          message: "we are. My mouth waters whenever drive thorugh that area",
+          timeStamp: "13:14",
+        },
+      },
+      {
+        user2: {
+          message: "haha, I bet. Lets take Tony and Natasha too next time",
+          timeStamp: "13:14",
+        },
+        you: {
+          message: "Sure. they would love it",
+          timeStamp: "13:15",
+        },
+      },
     ],
   },
 ];

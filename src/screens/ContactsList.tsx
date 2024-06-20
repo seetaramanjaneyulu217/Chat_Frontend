@@ -22,7 +22,7 @@ const ContactsList = () => {
   ];
 
   return (
-    <div className="w-full ml-8 py-10 md:w-1/4">
+    <div className="w-full ml-8 py-7 md:w-1/4">
       <div className="flex items-center gap-x-5 mb-7">
         <MdOutlineChevronLeft size={25} />
         <p className="text-[#222222] text-2xl">Chats</p>

@@ -2,6 +2,8 @@ import React from "react";
 import { ChatEntry, Contact } from "../types";
 import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import { Dropdown, MenuProps } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { passUserIdToStore } from "../store/slices/chatData";
 
 interface ContactCardProps {
   contact: Contact;
@@ -9,6 +11,9 @@ interface ContactCardProps {
 }
 
 const ContactCard = ({ contact, menuItems }: ContactCardProps) => {
+  const dispatch = useDispatch();
+  const userId: string = useSelector((state: any) => state.chat.userId)
+
   let date = new Date();
   let month: string = date.getMonth().toString();
   month = +month < 10 ? "0" + month : month;
@@ -22,7 +27,10 @@ const ContactCard = ({ contact, menuItems }: ContactCardProps) => {
   lastMessage = lastMessage + " ...";
 
   return (
-    <div className="flex w-full justify-between">
+    <div
+      className={`flex w-full justify-between cursor-pointer p-2 ${userId === contact.userId ? 'bg-[#F5F7FB] rounded' : ''}`}
+      onClick={() => dispatch(passUserIdToStore({ userId: contact.userId }))}
+    >
       <div className="flex items-center gap-x-2">
         {/* for profile picture */}
         <div>
@@ -44,12 +52,22 @@ const ContactCard = ({ contact, menuItems }: ContactCardProps) => {
         {/* for date and unread messages */}
         <div>
           <p className="text-[#8E8E93] font-roboto font-normal text-sm">{`${day}/${month}/${year}`}</p>
-          { contact.unreadCount !== 0 && <p className="flex justify-center items-center text-white text-xs font-roboto font-normal border border-[#3BA55D] bg-[#3BA55D] rounded-full h-5 w-5">{contact.unreadCount}</p> }
+          {contact.unreadCount !== 0 && (
+            <p className="flex justify-center items-center text-white text-xs font-roboto font-normal border border-[#3BA55D] bg-[#3BA55D] rounded-full h-5 w-5">
+              {contact.unreadCount}
+            </p>
+          )}
         </div>
 
-        <Dropdown menu={{ items: menuItems }} trigger={['click']}>
-          <HiOutlineEllipsisVertical size={20} color="#007AFF" className="cursor-pointer" />
-        </Dropdown>
+        <div onClick={(e: any) => e.stopPropagation()}>
+          <Dropdown menu={{ items: menuItems }} trigger={["click"]}>
+            <HiOutlineEllipsisVertical
+              size={20}
+              color="#007AFF"
+              className="cursor-pointer"
+            />
+          </Dropdown>
+        </div>
       </div>
     </div>
   );
