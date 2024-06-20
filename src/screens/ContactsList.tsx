@@ -1,25 +1,12 @@
 import React from "react";
-import contactsData from "../contactsData";
 import { Contact } from "../types";
 import ContactCard from "../components/ContactCard";
-import { MenuProps } from "antd";
 import { MdOutlineChevronLeft } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const ContactsList = () => {
-  const menuItems: MenuProps["items"] = [
-    {
-      label: <button>Mark as unread</button>,
-      key: "0",
-    },
-    {
-      label: <button>Delete</button>,
-      key: "1",
-    },
-    {
-      label: <button>Cancel</button>,
-      key: "2",
-    },
-  ];
+
+  const contactsData = useSelector((state: any) => state.contacts.contactsData)
 
   return (
     <div className="w-full ml-8 py-7 md:w-1/4">
@@ -32,7 +19,6 @@ const ContactsList = () => {
           <ContactCard
             key={contact.userId}
             contact={contact}
-            menuItems={menuItems}
           />
         ))}
       </div>

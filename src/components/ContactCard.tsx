@@ -4,13 +4,31 @@ import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import { Dropdown, MenuProps } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { passUserIdToStore } from "../store/slices/chatData";
+import { deleteSelectedContactChat } from "../store/slices/contacts";
 
 interface ContactCardProps {
   contact: Contact;
-  menuItems: MenuProps["items"];
 }
 
-const ContactCard = ({ contact, menuItems }: ContactCardProps) => {
+
+
+const ContactCard = ({ contact }: ContactCardProps) => {
+
+  const menuItems: MenuProps["items"] = [
+    {
+      label: <button>Mark as unread</button>,
+      key: "0",
+    },
+    {
+      label: <button onClick={() => dispatch(deleteSelectedContactChat({ userId: contact.userId }))}>Delete</button>,
+      key: "1",
+    },
+    {
+      label: <button>Cancel</button>,
+      key: "2",
+    },
+  ];
+
   const dispatch = useDispatch();
   const userId: string = useSelector((state: any) => state.chat.userId)
 
