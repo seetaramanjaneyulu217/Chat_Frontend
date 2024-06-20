@@ -11,6 +11,7 @@ const initialState: InitialState = {
       userId: "user1",
       name: "Sam",
       unreadCount: 1,
+      previousUnreadCount: 0,
       profilePictureURL:
         "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg",
       chat: [
@@ -61,6 +62,7 @@ const initialState: InitialState = {
       userId: "user2",
       name: "Elon",
       unreadCount: 0,
+      previousUnreadCount: 0,
       profilePictureURL:
         "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg",
       chat: [
@@ -101,6 +103,7 @@ const initialState: InitialState = {
       userId: "user3",
       name: "Kate",
       unreadCount: 1,
+      previousUnreadCount: 0,
       profilePictureURL:
         "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg",
       chat: [
@@ -203,11 +206,32 @@ const contactsData = createSlice({
   name: "contacts",
   initialState,
   reducers: {
+    makeUnreadCountToZero: (state, action) => {
+      const contact: Contact[] = state.contactsData.filter((contact: Contact) => contact.userId === action.payload.userId)
+      state.contactsData = state.contactsData.filter((contact: Contact) => contact.userId !== action.payload.userId)
+      if(contact[0].unreadCount !== 0) contact[0].previousUnreadCount = contact[0].unreadCount
+      contact[0].unreadCount = 0
+      state.contactsData = [contact[0], ...state.contactsData]
+    },
+
+    reStoreUnreadCount: (state, action) => {
+      const index: number = state.contactsData.findIndex((contact: Contact) => {
+        return contact.userId === action.payload.userId
+      })
+
+      if(index !== -1) {
+        const contact = state.contactsData[index]
+        contact.unreadCount = contact.previousUnreadCount
+        state.contactsData = state.contactsData.filter((contact: Contact) => contact.userId !== action.payload.userId)
+        state.contactsData.splice(index, 0, contact)
+      }
+    },
+
     deleteSelectedContactChat: (state, action) => {
       state.contactsData = state.contactsData.filter((contact: Contact) => contact.userId !== action.payload.userId)
     }
   },
 });
 
-export const { deleteSelectedContactChat } = contactsData.actions;
+export const { makeUnreadCountToZero, reStoreUnreadCount, deleteSelectedContactChat } = contactsData.actions;
 export default contactsData.reducer;

@@ -4,7 +4,7 @@ import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import { Dropdown, MenuProps } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { passUserIdToStore } from "../store/slices/chatData";
-import { deleteSelectedContactChat } from "../store/slices/contacts";
+import { deleteSelectedContactChat, makeUnreadCountToZero, reStoreUnreadCount } from "../store/slices/contacts";
 
 interface ContactCardProps {
   contact: Contact;
@@ -16,7 +16,7 @@ const ContactCard = ({ contact }: ContactCardProps) => {
 
   const menuItems: MenuProps["items"] = [
     {
-      label: <button>Mark as unread</button>,
+      label: <button onClick={() => dispatch(reStoreUnreadCount({ userId: contact.userId }))}>Mark as unread</button>,
       key: "0",
     },
     {
@@ -41,13 +41,15 @@ const ContactCard = ({ contact }: ContactCardProps) => {
 
   const lastChatEntry: ChatEntry = contact.chat[contact.chat.length - 1];
   const lastMessageKey: string = Object.keys(lastChatEntry).pop()!;
-  let lastMessage: string = lastChatEntry[lastMessageKey].message.slice(0, 15);
-  lastMessage = lastMessage + " ...";
+  const lastMessage: string = lastChatEntry[lastMessageKey].message.slice(0, 15) + " ...";
 
   return (
     <div
       className={`flex w-full justify-between cursor-pointer p-2 ${userId === contact.userId ? 'bg-[#F5F7FB] rounded' : ''}`}
-      onClick={() => dispatch(passUserIdToStore({ userId: contact.userId }))}
+      onClick={() => {
+        dispatch(passUserIdToStore({ userId: contact.userId }))
+        dispatch(makeUnreadCountToZero({ userId: contact.userId }))
+      }}
     >
       <div className="flex items-center gap-x-2">
         {/* for profile picture */}

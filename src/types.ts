@@ -13,6 +13,7 @@ export interface Contact {
     userId: string;
     name: string;
     unreadCount: number;
+    previousUnreadCount: number;
     profilePictureURL: string;
     chat: ChatEntry[];
 }

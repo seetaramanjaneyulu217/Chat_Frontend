@@ -41,7 +41,7 @@ const Conversation = ({ contact }: ConversationProps) => {
   return (
     <>
       {!contact ? (
-        <div className="flex justify-center items-center text-3xl font-roboto font-semibold w-full md:w-3/4 h-screen">
+        <div className="hidden lg:flex lg:justify-center lg:items-center text-3xl font-roboto font-semibold w-full md:w-3/4 h-screen">
           Select any chat to see the messages.
         </div>
       ) : (
