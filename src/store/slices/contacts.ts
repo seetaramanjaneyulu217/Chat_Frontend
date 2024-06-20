@@ -207,31 +207,45 @@ const contactsData = createSlice({
   initialState,
   reducers: {
     makeUnreadCountToZero: (state, action) => {
-      const contact: Contact[] = state.contactsData.filter((contact: Contact) => contact.userId === action.payload.userId)
-      state.contactsData = state.contactsData.filter((contact: Contact) => contact.userId !== action.payload.userId)
-      if(contact[0].unreadCount !== 0) contact[0].previousUnreadCount = contact[0].unreadCount
-      contact[0].unreadCount = 0
-      state.contactsData = [contact[0], ...state.contactsData]
+      const contact: Contact[] = state.contactsData.filter(
+        (contact: Contact) => contact.userId === action.payload.userId
+      );
+      if (contact[0].unreadCount !== 0) {
+        state.contactsData = state.contactsData.filter(
+          (contact: Contact) => contact.userId !== action.payload.userId
+        );
+        contact[0].previousUnreadCount = contact[0].unreadCount;
+        contact[0].unreadCount = 0;
+        state.contactsData = [contact[0], ...state.contactsData];
+      }
     },
 
     reStoreUnreadCount: (state, action) => {
       const index: number = state.contactsData.findIndex((contact: Contact) => {
-        return contact.userId === action.payload.userId
-      })
+        return contact.userId === action.payload.userId;
+      });
 
-      if(index !== -1) {
-        const contact = state.contactsData[index]
-        contact.unreadCount = contact.previousUnreadCount
-        state.contactsData = state.contactsData.filter((contact: Contact) => contact.userId !== action.payload.userId)
-        state.contactsData.splice(index, 0, contact)
+      if (index !== -1) {
+        const contact = state.contactsData[index];
+        contact.unreadCount = contact.previousUnreadCount;
+        state.contactsData = state.contactsData.filter(
+          (contact: Contact) => contact.userId !== action.payload.userId
+        );
+        state.contactsData.splice(index, 0, contact);
       }
     },
 
     deleteSelectedContactChat: (state, action) => {
-      state.contactsData = state.contactsData.filter((contact: Contact) => contact.userId !== action.payload.userId)
-    }
+      state.contactsData = state.contactsData.filter(
+        (contact: Contact) => contact.userId !== action.payload.userId
+      );
+    },
   },
 });
 
-export const { makeUnreadCountToZero, reStoreUnreadCount, deleteSelectedContactChat } = contactsData.actions;
+export const {
+  makeUnreadCountToZero,
+  reStoreUnreadCount,
+  deleteSelectedContactChat,
+} = contactsData.actions;
 export default contactsData.reducer;

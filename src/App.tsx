@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div className="flex">
-      <ContactsList />
+      <ContactsList userId={userId} />
       <Conversation contact={contacts[0]} />
     </div>
   );

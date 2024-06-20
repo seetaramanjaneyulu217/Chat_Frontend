@@ -11,7 +11,7 @@ interface MessageCardProps {
 
 const MessageCard = ({ message }: MessageCardProps) => {
   return (
-    <div className={`flex ${message.user === 'you' ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex ${message.user === 'you' ? 'justify-end' : 'justify-start'} xs:mb-3 lg:mb-1`}>
       <div
         className={`flex flex-col rounded-full px-7 py-2 w-fit ${
           message.user === "you"

@@ -7,7 +7,10 @@ import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
+import { MdOutlineChevronLeft } from "react-icons/md";
 import MessageCard from "../components/MessageCard";
+import { useDispatch } from "react-redux";
+import { passUserIdToStore } from "../store/slices/chatData";
 
 interface ConversationProps {
   contact: Contact;
@@ -21,6 +24,7 @@ type AllMessages = {
 }[];
 
 const Conversation = ({ contact }: ConversationProps) => {
+  const dispatch = useDispatch()
   let allMessages: AllMessages = [];
 
   if (contact) {
@@ -45,16 +49,21 @@ const Conversation = ({ contact }: ConversationProps) => {
           Select any chat to see the messages.
         </div>
       ) : (
-        <div className="w-full hidden lg:block md:w-3/4 py-7 px-8">
+        <div
+          className={`w-full hidden lg:block lg:w-3/4 py-7 px-8 ${
+            contact && "xs:block"
+          }`}
+        >
           {/* for the top most part */}
           <div className="flex items-center justify-between bg-[#F6F6F6] px-6 py-3 rounded-lg">
             <div className="flex items-center gap-x-2">
               {/* for profile picture */}
-              <div>
+              <div className="flex items-center gap-x-2">
+                <MdOutlineChevronLeft className="lg:hidden" size={25} onClick={() => dispatch(passUserIdToStore({ userId: "" }))} />
                 <img
                   src={contact.profilePictureURL}
                   alt="profile"
-                  className="border border-white rounded-full w-12 h-12"
+                  className="border border-white rounded-full w-12 h-12 xs:hidden md:block"
                 />
               </div>
 
@@ -76,7 +85,7 @@ const Conversation = ({ contact }: ConversationProps) => {
           </div>
 
           {/* for chat display */}
-          <div className="mt-5 h-[70vh] overflow-y-auto scrollbar">
+          <div className="mt-5 xs:h-[60vh] sm:h-[68vh] h-[70vh] overflow-y-auto scrollbar">
             {allMessages.map(
               (message: {
                 id: number;
@@ -110,17 +119,6 @@ const Conversation = ({ contact }: ConversationProps) => {
                 <IoSend color="#D8D8D8" />
               </div>
             </div>
-
-            {/* <div className="flex items-center border border-gray-300 rounded-full px-3 py-2 shadow-sm">
-              <input
-                type="text"
-                placeholder="Message Josh California"
-                // className="flex-grow outline-none"
-              />
-              <div>
-                <IoSend color="#D8D8D8" />
-              </div>
-            </div> */}
           </div>
         </div>
       )}
