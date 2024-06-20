@@ -1,10 +1,13 @@
+import ContactsList from "./screens/ContactsList";
+import Conversation from "./screens/Conversation";
 
 function App() {
   return (
-    <div className='text-3xl text-blue-400'>
-      Chat app
+    <div className="flex">
+      <ContactsList />
+      <Conversation />
     </div>
-  )
+  );
 }
 
 export default App;
